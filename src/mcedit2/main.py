@@ -74,7 +74,7 @@ log = logging.getLogger(__name__)
 QObject_tr_unicode_literals_fix()
 
 log_debug = print
-# log_debug = lambda *a, **kw: None
+ log_debug = lambda *a, **kw: None
 
 def setup_logging():
     root_logger = logging.getLogger()
@@ -201,16 +201,16 @@ def excepthook(exc_type, exc_value, exc_tb):
     # exception, so we override it to send the error to the logging module and exit with an error,
     # since PySide foolishly tries to continue after catching the error.
     log.error("Unhandled Exception: \n\t%s", exc_value, exc_info=(exc_type, exc_value, exc_tb))
-    # text = "An error has occured.\n\nUnhandled exception: %s" % exc_value
-    # if getattr(sys, 'frozen', False):
-    #     if editorApp:
-    #         if editorApp.mainWindow:
-    #             editorApp.mainWindow.hide()
-    #     msg = QtGui.QMessageBox(editorApp.mainWindow or None if editorApp else None)
-    #     msg.setIcon(QtGui.QMessageBox.Critical)
-    #     msg.setText(text)
-    #     msg.exec_()
-    # sys.exit(-1)
+     text = "An error has occured.\n\nUnhandled exception: %s" % exc_value
+     if getattr(sys, 'frozen', False):
+         if editorApp:
+             if editorApp.mainWindow:
+                 editorApp.mainWindow.hide()
+         msg = QtGui.QMessageBox(editorApp.mainWindow or None if editorApp else None)
+         msg.setIcon(QtGui.QMessageBox.Critical)
+         msg.setText(text)
+         msg.exec_()
+     sys.exit(-1)
     if isinstance(exc_value, KeyboardInterrupt):
         sys.exit(-1)
 
